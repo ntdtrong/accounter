@@ -8,6 +8,15 @@ id int primary key identity(1,1),
 name nvarchar(100)
 )
 go
+
+insert into categories values (N'Ăn uống')
+insert into categories values (N'Đi lại')
+insert into categories values (N'Giải trí')
+insert into categories values (N'Sinh hoạt')
+insert into categories values (N'Gửi về nhà')
+insert into categories values (N'Khác')
+go
+
 create table daily
 (
 id int primary key identity(1,1),
@@ -247,6 +256,37 @@ BEGIN
 END
 GO
 
+
+
+-- get_daily
+
+CREATE PROCEDURE get_daily
+(
+	@month int,
+	@year int
+)
+AS
+BEGIN
+	SELECT * FROM daily WHERE month = @month AND year = @year
+	ORDER BY category_id, day
+END
+GO
+
+-- get_details_for_day
+CREATE PROCEDURE get_details_for_day
+(
+	@day int,
+	@month int,
+	@year int
+)
+AS
+BEGIN
+	SELECT * FROM details WHERE day = @day AND month = @month AND year = @year
+END
+GO
+
+
+exec get_daily 7,2013
 --exec insert_details 2, 50, 'do xang', 1, 9, 2012
 --go
 --exec update_details 1, 100
